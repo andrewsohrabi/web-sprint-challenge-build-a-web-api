@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Actions = require('./actions-model');
-const {checkId} = require('./actions-middleware');
+const {checkId, checkProjectId} = require('./actions-middleware');
 
 //[GET] /api/actions
 router.get('/', (req,res) => {
@@ -23,14 +23,13 @@ router.get('/:id', checkId, (req,res)=> {
 // [POST] /api/actions 
 //returns the newly created action as the body of the _response_.
 
-router.post('/', (req,res)=> {
-    Actions.insert(req.body)
-        .then(action => {
-            res.status(202).json(action)
-        }).catch(err => {
-            res.status(500).json({message: 'error creating new action'})
-        })
+router.post('/', checkProjectId, (req,res)=> {
+    res.status(202).json(res.action);
 })
+
+//[PUT] /api/actions/:id` 
+//returns the updated action as the body of the _response_.
+
 
 
 
