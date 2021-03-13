@@ -20,6 +20,17 @@ router.get('/:id', checkId, (req,res)=> {
     res.status(200).json(req.action)
 })
 
+// [POST] /api/actions 
+//returns the newly created action as the body of the _response_.
+
+router.post('/', (req,res)=> {
+    Actions.insert(req.body)
+        .then(action => {
+            res.status(202).json(action)
+        }).catch(err => {
+            res.status(500).json({message: 'error creating new action'})
+        })
+})
 
 
 
