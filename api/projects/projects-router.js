@@ -54,4 +54,15 @@ router.delete('/:id',checkProjectId,(req,res)=> {
         .catch(res.status(500).json({message: 'error deleting project'}))
 })
 
+// [GET] /api/projects/:id/actions` sends an array of actions (or an empty array) as the body of the response.
+
+router.get('/:id/actions',checkProjectId,(req,res)=> {
+    Projects.getProjectActions(req.params.id)
+        .then(actions => {
+            res.status(200).json(actions)
+        }).catch(err => {
+            res.status(500).json({message: 'error fetching project action'})
+        })
+})
+
 module.exports = router;
