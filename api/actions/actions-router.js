@@ -39,5 +39,14 @@ router.put('/:id', checkId, (req,res)=> {
         })
 })
 
+//[DELETE] /api/projects/:id` returns no _response_ body.
+
+router.delete('/:id',checkId, (req,res)=> {
+    Actions.remove(req.params.id)
+        .then(res.status(200).json({}))
+        .catch(err => {
+            res.status(500).json({message: 'error deleting action'})
+        })
+})
 
 module.exports = router;
