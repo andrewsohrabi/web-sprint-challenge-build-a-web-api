@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Actions = require('./actions-model');
+const {checkId} = require('./actions-middleware');
 
 //[GET] /api/actions
 router.get('/', (req,res) => {
@@ -12,5 +13,14 @@ router.get('/', (req,res) => {
             res.status(500).json({message: 'error getting actions'})
         })
 })
+
+// [GET] /api/action/:id
+
+router.get('/:id', checkId, (req,res)=> {
+    res.status(200).json(req.action)
+})
+
+
+
 
 module.exports = router;
