@@ -30,7 +30,14 @@ router.post('/', checkProjectId, (req,res)=> {
 //[PUT] /api/actions/:id` 
 //returns the updated action as the body of the _response_.
 
-
+router.put('/:id', checkId, (req,res)=> {
+    Actions.update(req.params.id,req.body)
+        .then(action => {
+            res.status(200).json(req.body)
+        }).catch(err => {
+            res.status(500).json({message: 'error updating action'})
+        })
+})
 
 
 module.exports = router;
