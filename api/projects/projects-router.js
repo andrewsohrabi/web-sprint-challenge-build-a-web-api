@@ -33,5 +33,17 @@ router.post('/', (req,res)=> {
     }
 })
 
+// [PUT] /api/projects/:id` returns the updated project as the body of the _response_.
+
+router.put('/:id',checkProjectId, (req,res)=> {
+    const {name,description} = req.body
+    if (!name || !description) {
+        res.status(400).json({message: 'missing name or description fields'})
+    } else {
+        Projects.update(req.params.id, req.body)
+            .then(res.status(202).json(req.body))
+            .catch(()=> {res.status(500).json({message: `error updating project ${req.params.id}`})})
+    }
+})
 
 module.exports = router;
