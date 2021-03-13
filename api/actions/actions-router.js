@@ -24,6 +24,11 @@ router.get('/:id', checkId, (req,res)=> {
 //returns the newly created action as the body of the _response_.
 
 router.post('/', checkProjectId, (req,res)=> {
+    const {project_id,description,notes} = req.body
+    if (!project_id || !description || !notes) {
+        // QUESTION: NOT PASSING TEST?
+        res.status(400).json({message: 'mising required fields'})
+    }
     res.status(202).json(res.action);
 })
 
@@ -35,7 +40,7 @@ router.put('/:id', checkId, (req,res)=> {
         .then(action => {
             res.status(200).json(req.body)
         }).catch(err => {
-            res.status(500).json({message: 'error updating action'})
+            res.status(400).json({message: 'error updating action'})
         })
 })
 

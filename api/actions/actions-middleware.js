@@ -19,6 +19,7 @@ const checkProjectId = async (req,res,next) => {
     try {
         const {project_id} = req.body;
         const validProject = await Projects.get(project_id);
+
         if(!validProject) {
             res.status(404).json({message: `no valid project with id:${project_id}`})
         } else {
@@ -27,7 +28,7 @@ const checkProjectId = async (req,res,next) => {
                     res.action = action;
                     next()
                 }).catch(err => {
-                    res.status(500).json({message: 'error creating new action'})
+                    res.status(400).json({message: 'error creating new action'})
                 })
         }
     } catch (err) {
