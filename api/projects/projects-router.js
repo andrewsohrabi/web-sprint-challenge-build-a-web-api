@@ -20,6 +20,18 @@ router.get('/:id',checkProjectId, (req,res)=> {
     res.status(200).json(req.projects)
 })
 
+// [POST] /api/projects` returns the newly created project as the body of the _response_.
+
+router.post('/', (req,res)=> {
+    const {name,description} = req.body
+    if (!name || !description) {
+        res.status(400).json({message: 'missing name or description fields'})
+    } else {
+        Projects.insert(req.body)
+            .then(res.status(202).json(req.body))
+            .catch(()=> {res.status(500).json({message: 'error creating new project'})})
+    }
+})
 
 
 module.exports = router;
